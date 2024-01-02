@@ -6,4 +6,15 @@
     </style>
 
     <style name="Theme.TodolistApp" parent="Base.Theme.TodolistApp" />
+
+    <style name="custom_circle_checkbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/circle_checkbox_selector</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="custom_star_checkbox" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/star_checkbox_selector</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 </resources>
