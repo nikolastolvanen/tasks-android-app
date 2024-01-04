@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.List;
 
@@ -85,19 +86,21 @@ public class TaskListFragment extends Fragment {
         dialog.setContentView(R.layout.fragment_add_task);
 
         EditText editTextTitle = dialog.findViewById(R.id.edit_text_add_title);
+        SwitchMaterial switchImportant = dialog.findViewById(R.id.switch_important);
         Button buttonSaveTask = dialog.findViewById(R.id.button_save_task);
 
         buttonSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String title = editTextTitle.getText().toString();
+                boolean important = switchImportant.isChecked();
 
                 if (title.trim().isEmpty()) {
                     Toast.makeText(getContext(), "Please insert task title", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                taskViewModel.insert(new Task(title));
+                taskViewModel.insert(new Task(title, important));
             }
         });
 

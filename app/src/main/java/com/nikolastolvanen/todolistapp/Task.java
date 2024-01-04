@@ -13,8 +13,32 @@ public class Task {
     @ColumnInfo(name = "task_name")
     private String taskName;
 
-    public Task(String taskName) {
+    @ColumnInfo(name = "is_completed")
+    private boolean isCompleted;
+
+    @ColumnInfo(name = "is_important")
+    private boolean isImportant;
+
+    public Task(String taskName, boolean isImportant) {
         this.taskName = taskName;
+        this.isCompleted = false;
+        this.isImportant = isImportant;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public boolean isImportant() {
+        return isImportant;
+    }
+
+    public void setImportant(boolean important) {
+        isImportant = important;
     }
 
     public int getId() {

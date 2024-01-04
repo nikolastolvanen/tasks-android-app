@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     @Override
     public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task_list_item, parent, false);
+                .inflate(R.layout.fragment_task_list_item, parent, false);
 
         return new TaskHolder(view);
     }
@@ -46,6 +47,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task currentTask = tasks.get(position);
         holder.textViewTitle.setText(currentTask.getTaskName());
+        holder.checkBoxCompleted.setChecked(currentTask.isCompleted());
+        holder.checkBoxImportant.setChecked(currentTask.isImportant());
     }
 
     @Override
@@ -64,10 +67,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
     class TaskHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
+        private CheckBox checkBoxCompleted;
+        private CheckBox checkBoxImportant;
 
         public TaskHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
+            checkBoxCompleted = itemView.findViewById(R.id.check_box_completed);
+            checkBoxImportant = itemView.findViewById(R.id.check_box_important);
         }
     }
 
