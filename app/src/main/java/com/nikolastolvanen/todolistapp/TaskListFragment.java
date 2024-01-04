@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,6 +54,19 @@ public class TaskListFragment extends Fragment {
                 adapter.setTasks(tasks);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                taskViewModel.delete(adapter.getTaskAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(getContext(), "Task deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(rvTaskList);
 
         fabAddTask = view.findViewById(R.id.fab_add_new_task);
         fabAddTask.setOnClickListener(new View.OnClickListener() {
