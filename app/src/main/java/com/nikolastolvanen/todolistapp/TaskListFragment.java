@@ -1,6 +1,9 @@
 package com.nikolastolvanen.todolistapp;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,8 +21,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -86,14 +93,16 @@ public class TaskListFragment extends Fragment {
         dialog.setContentView(R.layout.fragment_add_task);
 
         EditText editTextTitle = dialog.findViewById(R.id.edit_text_add_title);
-        SwitchMaterial switchImportant = dialog.findViewById(R.id.switch_important);
-        Button buttonSaveTask = dialog.findViewById(R.id.button_save_task);
+        //editTextTitle.requestFocus();
+
+        CheckBox checkBoxImportant = dialog.findViewById(R.id.cb_important);
+        ImageButton buttonSaveTask = dialog.findViewById(R.id.button_save_task);
 
         buttonSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String title = editTextTitle.getText().toString();
-                boolean important = switchImportant.isChecked();
+                boolean important = checkBoxImportant.isChecked();
 
                 if (title.trim().isEmpty()) {
                     Toast.makeText(getContext(), "Please insert task title", Toast.LENGTH_SHORT).show();
@@ -101,6 +110,7 @@ public class TaskListFragment extends Fragment {
                 }
 
                 taskViewModel.insert(new Task(title, important));
+                //dialog.dismiss();
             }
         });
 
@@ -109,6 +119,7 @@ public class TaskListFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+        //dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
 }

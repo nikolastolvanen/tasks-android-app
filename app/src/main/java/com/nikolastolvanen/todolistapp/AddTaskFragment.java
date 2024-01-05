@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.View;
+import android.widget.EditText;
 
 
 public class AddTaskFragment extends Fragment {
@@ -18,6 +19,7 @@ public class AddTaskFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
     }
 
 }
