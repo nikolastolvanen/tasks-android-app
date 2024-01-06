@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,6 +79,20 @@ public class TaskListFragment extends Fragment {
             }
         }).attachToRecyclerView(rvTaskList);
 
+        adapter.setTaskListClickListener(new TaskAdapter.OnTaskClickListener() {
+            @Override
+            public void onTaskClick(Task task) {
+
+                Bundle bundle = new Bundle();
+                bundle.putString("taskName", task.getTaskName());
+                bundle.putBoolean("taskCompleted", task.isCompleted());
+                bundle.putBoolean("taskImportant", task.isImportant());
+
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.taskDetailsFragment, bundle);
+            }
+        });
+
         fabAddTask = view.findViewById(R.id.fab_add_new_task);
         fabAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +110,7 @@ public class TaskListFragment extends Fragment {
         dialog.setContentView(R.layout.fragment_add_task);
 
         EditText editTextTitle = dialog.findViewById(R.id.edit_text_add_title);
-        //editTextTitle.requestFocus();
+        editTextTitle.requestFocus();
 
         CheckBox checkBoxImportant = dialog.findViewById(R.id.cb_important);
         ImageButton buttonSaveTask = dialog.findViewById(R.id.button_save_task);

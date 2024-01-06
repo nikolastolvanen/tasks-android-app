@@ -18,21 +18,7 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
     private List<Task> tasks = new ArrayList<>();
-
-    View.OnClickListener TaskListClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            int position = (int) view.getTag();
-
-            Bundle bundle = new Bundle();
-            bundle.putString("taskName", tasks.get(position).getTaskName());
-
-            //NavController navController = Navigation.findNavController(view);
-            //navController.navigate(R.id.taskDetailsFragment, bundle);
-
-        }
-    };
+    private OnTaskClickListener listener;
 
     @NonNull
     @Override
@@ -75,7 +61,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             checkBoxCompleted = itemView.findViewById(R.id.check_box_completed);
             checkBoxImportant = itemView.findViewById(R.id.check_box_important);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onTaskClick(tasks.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnTaskClickListener {
+        void onTaskClick(Task task);
+    }
+
+    public void setTaskListClickListener(OnTaskClickListener listener) {
+        this.listener = listener;
     }
 
 }

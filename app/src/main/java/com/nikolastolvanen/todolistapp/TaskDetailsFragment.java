@@ -13,11 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import java.util.List;
 
 
 public class TaskDetailsFragment extends Fragment {
+
+    TaskViewModel taskViewModel;
+    TaskAdapter adapter;
 
     public TaskDetailsFragment() {
         super(R.layout.fragment_task_details);
@@ -25,7 +30,24 @@ public class TaskDetailsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         super.onViewCreated(view, savedInstanceState);
+
+        //taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
+        //adapter = new TaskAdapter();
+
+        CheckBox cbTaskDetailsCompleted = view.findViewById(R.id.check_box_task_details_completed);
+        TextView tvTaskName = view.findViewById(R.id.text_view_task_details_title);
+        CheckBox cbTaskDetailsImportant = view.findViewById(R.id.check_box_task_details_important);
+
+
+
+        String taskName = getArguments().getString("taskName");
+        boolean taskCompleted = getArguments().getBoolean("taskCompleted");
+        boolean taskImportant = getArguments().getBoolean("taskImportant");
+
+        tvTaskName.setText(taskName);
+        cbTaskDetailsCompleted.setChecked(taskCompleted);
+        cbTaskDetailsImportant.setChecked(taskImportant);
+
     }
 }
