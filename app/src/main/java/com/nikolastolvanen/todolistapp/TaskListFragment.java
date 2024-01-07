@@ -84,6 +84,7 @@ public class TaskListFragment extends Fragment {
             public void onTaskClick(Task task) {
 
                 Bundle bundle = new Bundle();
+                bundle.putInt("taskId", task.getId());
                 bundle.putString("taskName", task.getTaskName());
                 bundle.putBoolean("taskCompleted", task.isCompleted());
                 bundle.putBoolean("taskImportant", task.isImportant());

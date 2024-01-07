@@ -7,19 +7,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 
 public class TaskDetailsFragment extends Fragment {
+
+
+    int taskId;
+    String taskName;
+    boolean taskCompleted;
+    boolean taskImportant;
+
 
     TaskViewModel taskViewModel;
     TaskAdapter adapter;
@@ -32,22 +44,47 @@ public class TaskDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
-        //adapter = new TaskAdapter();
+        taskId = getArguments().getInt("taskId");
+        taskName = getArguments().getString("taskName");
+        taskCompleted = getArguments().getBoolean("taskCompleted");
+        taskImportant = getArguments().getBoolean("taskImportant");
+
+        taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
+        adapter = new TaskAdapter();
 
         CheckBox cbTaskDetailsCompleted = view.findViewById(R.id.check_box_task_details_completed);
-        TextView tvTaskName = view.findViewById(R.id.text_view_task_details_title);
+        EditText etTaskName = view.findViewById(R.id.edit_text_task_details_title);
         CheckBox cbTaskDetailsImportant = view.findViewById(R.id.check_box_task_details_important);
 
+        Button btnUpdate = view.findViewById(R.id.button_update_task);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String title = etTaskName.getText().toString();
+                boolean important = cbTaskDetailsImportant.isChecked();
+                boolean completed = cbTaskDetailsCompleted.isChecked();
 
-        String taskName = getArguments().getString("taskName");
-        boolean taskCompleted = getArguments().getBoolean("taskCompleted");
-        boolean taskImportant = getArguments().getBoolean("taskImportant");
+                if (title.trim().isEmpty()) {
+                    Toast.makeText(getContext(), "Please insert task title", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        tvTaskName.setText(taskName);
+                Task task = new Task(title, important);
+                task.setId(taskId);
+                taskViewModel.update(task);
+
+                Bundle bundle = new Bundle();
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.taskListFragment, bundle);
+
+            }
+        });
+
+        etTaskName.setText(taskName);
         cbTaskDetailsCompleted.setChecked(taskCompleted);
         cbTaskDetailsImportant.setChecked(taskImportant);
 
     }
+
 }

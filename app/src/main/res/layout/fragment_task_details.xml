@@ -4,25 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
     android:orientation="vertical"
     tools:context=".TaskDetailsFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <CheckBox
             android:id="@+id/check_box_task_details_completed"
             style="@style/custom_circle_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_alignParentStart="true" />
 
-        <TextView
-            android:id="@+id/text_view_task_details_title"
+        <EditText
+            android:id="@+id/edit_text_task_details_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toStartOf="@id/check_box_task_details_important"
+            android:layout_toEndOf="@+id/check_box_task_details_completed"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="22sp"
             tools:text="Example task" />
@@ -31,16 +35,16 @@
             android:id="@+id/check_box_task_details_important"
             style="@style/custom_star_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
-
+    <Button
+        android:id="@+id/button_update_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="Update task" />
 
 </LinearLayout>
