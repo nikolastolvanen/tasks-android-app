@@ -71,12 +71,11 @@ public class TaskDetailsFragment extends Fragment {
                 }
 
                 Task task = new Task(title, important);
+                task.setCompleted(completed);
                 task.setId(taskId);
                 taskViewModel.update(task);
 
-                Bundle bundle = new Bundle();
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.taskListFragment, bundle);
+                getParentFragmentManager().popBackStackImmediate();
 
             }
         });
