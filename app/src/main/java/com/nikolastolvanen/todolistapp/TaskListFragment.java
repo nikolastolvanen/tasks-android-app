@@ -34,6 +34,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.List;
@@ -76,7 +77,7 @@ public class TaskListFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 taskViewModel.delete(adapter.getTaskAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(getContext(), "Task deleted", Toast.LENGTH_SHORT).show();
+                showSnackBarDelete();
             }
         }).attachToRecyclerView(rvTaskList);
 
@@ -139,6 +140,17 @@ public class TaskListFragment extends Fragment {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    private void showSnackBarDelete() {
+        Snackbar snackbar = Snackbar.make(getView(), "Task deleted", Snackbar.LENGTH_SHORT)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+        snackbar.show();
     }
 
 }
