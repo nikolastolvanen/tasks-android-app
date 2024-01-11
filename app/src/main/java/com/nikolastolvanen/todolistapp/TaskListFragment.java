@@ -76,8 +76,12 @@ public class TaskListFragment extends Fragment {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                Task deletedTask = adapter.getTaskAt(viewHolder.getAdapterPosition());
+                int position = viewHolder.getAdapterPosition();
+
                 taskViewModel.delete(adapter.getTaskAt(viewHolder.getAdapterPosition()));
-                showSnackBarDelete();
+                showSnackBarDelete(deletedTask, position);
             }
         }).attachToRecyclerView(rvTaskList);
 
@@ -142,12 +146,12 @@ public class TaskListFragment extends Fragment {
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
-    private void showSnackBarDelete() {
+    private void showSnackBarDelete(Task task, int position) {
         Snackbar snackbar = Snackbar.make(getView(), "Task deleted", Snackbar.LENGTH_SHORT)
                 .setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        taskViewModel.insert(task);
                     }
                 });
         snackbar.show();
