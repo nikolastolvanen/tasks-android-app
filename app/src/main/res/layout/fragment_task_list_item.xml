@@ -26,12 +26,20 @@
             android:id="@+id/text_view_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_toStartOf="@id/check_box_important"
             android:layout_toEndOf="@+id/check_box_completed"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
             tools:text="Example task" />
+
+        <TextView
+            android:id="@+id/text_view_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_title"
+            android:layout_toStartOf="@id/check_box_important"
+            android:layout_toEndOf="@+id/check_box_completed"
+            tools:text="Example due date" />
 
         <CheckBox
             android:id="@+id/check_box_important"

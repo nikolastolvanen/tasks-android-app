@@ -7,9 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.Date;
+
 @Database(entities = {Task.class}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class TaskDatabase extends RoomDatabase {
 
     private static TaskDatabase instance;
@@ -19,10 +24,13 @@ public abstract class TaskDatabase extends RoomDatabase {
     public static synchronized TaskDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(
-                    context.getApplicationContext(),
-                    TaskDatabase.class,
-                    "task_database"
-            ).fallbackToDestructiveMigration().addCallback(roomCallback).build();
+                            context.getApplicationContext(),
+                            TaskDatabase.class,
+                            "task_database"
+                    ).fallbackToDestructiveMigration()
+                    .addCallback(roomCallback)
+                    //.addTypeConverter(exampleConverterInstance)//////////////////////////////////////////////
+                    .build();
         }
         return instance;
     }

@@ -2,6 +2,7 @@ package com.nikolastolvanen.todolistapp;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -62,7 +63,7 @@ public class TaskListFragment extends Fragment {
         taskViewModel.getAllTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                adapter.setTasks(tasks);
+                adapter.submitList(tasks);
             }
         });
 
@@ -137,7 +138,7 @@ public class TaskListFragment extends Fragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
-        //dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
 }

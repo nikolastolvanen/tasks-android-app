@@ -31,6 +31,7 @@ public class TaskDetailsFragment extends Fragment {
     String taskName;
     boolean taskCompleted;
     boolean taskImportant;
+    String taskDueDate;
 
 
     TaskViewModel taskViewModel;
@@ -48,6 +49,7 @@ public class TaskDetailsFragment extends Fragment {
         taskName = getArguments().getString("taskName");
         taskCompleted = getArguments().getBoolean("taskCompleted");
         taskImportant = getArguments().getBoolean("taskImportant");
+        //taskDueDate = ///////////////////////////////////////////////////////////////////////////////////////
 
         taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
         adapter = new TaskAdapter();
