@@ -1,10 +1,8 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.time.LocalDate;
 
 @Entity(tableName = "task_table")
 public class Task {

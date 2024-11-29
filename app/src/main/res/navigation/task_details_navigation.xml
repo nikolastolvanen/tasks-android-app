@@ -6,12 +6,12 @@
 
     <fragment
         android:id="@+id/taskListFragment"
-        android:name="com.nikolastolvanen.todolistapp.TaskListFragment"
+        android:name="com.nikolastolvanen.todolistapp.view.fragments.TaskListFragment"
         android:label="TaskListFragment">
     </fragment>
     <fragment
         android:id="@+id/taskDetailsFragment"
-        android:name="com.nikolastolvanen.todolistapp.TaskDetailsFragment"
+        android:name="com.nikolastolvanen.todolistapp.view.fragments.TaskDetailsFragment"
         android:label="TaskDetailsFragment">
     </fragment>
 

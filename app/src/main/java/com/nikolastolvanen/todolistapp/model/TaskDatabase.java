@@ -1,4 +1,4 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,11 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.util.Date;
+import com.nikolastolvanen.todolistapp.Converters;
 
 @Database(entities = {Task.class}, version = 1)
 @TypeConverters({Converters.class})

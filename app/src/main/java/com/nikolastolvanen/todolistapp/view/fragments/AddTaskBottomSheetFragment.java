@@ -1,4 +1,4 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.view.fragments;
 
 import android.os.Bundle;
 
@@ -7,12 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.View;
-import android.widget.EditText;
+
+import com.nikolastolvanen.todolistapp.R;
 
 
-public class AddTaskFragment extends Fragment {
+public class AddTaskBottomSheetFragment extends Fragment {
 
-    public AddTaskFragment() {
+    public AddTaskBottomSheetFragment() {
         super(R.layout.fragment_add_task);
     }
 

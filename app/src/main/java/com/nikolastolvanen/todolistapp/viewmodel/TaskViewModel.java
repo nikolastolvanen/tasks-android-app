@@ -1,10 +1,13 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.nikolastolvanen.todolistapp.model.Task;
+import com.nikolastolvanen.todolistapp.model.TaskRepository;
 
 import java.util.List;
 

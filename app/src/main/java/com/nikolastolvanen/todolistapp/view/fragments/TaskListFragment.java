@@ -1,11 +1,6 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.view.fragments;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,8 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -35,7 +28,10 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.nikolastolvanen.todolistapp.R;
+import com.nikolastolvanen.todolistapp.TaskAdapter;
+import com.nikolastolvanen.todolistapp.model.Task;
+import com.nikolastolvanen.todolistapp.viewmodel.TaskViewModel;
 
 import java.util.List;
 

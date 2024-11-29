@@ -1,6 +1,5 @@
 package com.nikolastolvanen.todolistapp;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +7,11 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.nikolastolvanen.todolistapp.model.Task;
 
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
 
@@ -88,6 +84,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
 
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
+        //void onCheckBoxClick(Task task, boolean isChecked);
     }
 
     public void setTaskListClickListener(OnTaskClickListener listener) {

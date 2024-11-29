@@ -1,10 +1,12 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.Menu;
+
+import com.nikolastolvanen.todolistapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

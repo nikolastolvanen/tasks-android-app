@@ -1,4 +1,4 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.model;
 
 import android.os.AsyncTask;
 import android.app.Application;

@@ -1,4 +1,4 @@
-package com.nikolastolvanen.todolistapp;
+package com.nikolastolvanen.todolistapp.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
