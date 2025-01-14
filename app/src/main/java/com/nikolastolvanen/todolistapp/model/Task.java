@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
+
 @Entity(tableName = "task_table")
 public class Task {
 
@@ -19,23 +22,15 @@ public class Task {
     @ColumnInfo(name = "is_important")
     private boolean isImportant;
 
-    //@ColumnInfo(name = "due_date")
-    //private Long dueDate;
+    @ColumnInfo(name = "due_date")
+    private Date dueDate;
 
-    public Task(String taskName, boolean isImportant) {
+    public Task(String taskName, boolean isImportant, Date dueDate) {
         this.taskName = taskName;
         this.isCompleted = false;
         this.isImportant = isImportant;
-        //this.dueDate = LocalDate.now();
+        this.dueDate = dueDate;
     }
-
-    //public Long isDueDate() {
-    //    return dueDate;
-    //}
-
-    //public void setDueDate(Long dueDate) {
-    //    this.dueDate = dueDate;
-    //}
 
     public boolean isCompleted() {
         return isCompleted;
@@ -67,6 +62,14 @@ public class Task {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
 }

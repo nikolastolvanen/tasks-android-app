@@ -1,8 +1,9 @@
 package com.nikolastolvanen.todolistapp.view.fragments;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,31 +17,25 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Gravity;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.nikolastolvanen.todolistapp.R;
 import com.nikolastolvanen.todolistapp.TaskAdapter;
-import com.nikolastolvanen.todolistapp.model.Task;
 import com.nikolastolvanen.todolistapp.viewmodel.TaskViewModel;
+import com.nikolastolvanen.todolistapp.model.Task;
 
+import java.util.Calendar;
 import java.util.List;
 
 
 public class TaskListFragment extends Fragment {
 
-    FloatingActionButton fabAddTask;
-
     private TaskViewModel taskViewModel;
+
+
 
     public TaskListFragment() {
         super(R.layout.fragment_task_list);
@@ -55,6 +50,8 @@ public class TaskListFragment extends Fragment {
 
         TaskAdapter adapter = new TaskAdapter();
         rvTaskList.setAdapter(adapter);
+
+        Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
         taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
         taskViewModel.getAllTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
@@ -94,52 +91,32 @@ public class TaskListFragment extends Fragment {
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.taskDetailsFragment, bundle);
             }
-        });
 
-        fabAddTask = view.findViewById(R.id.fab_add_new_task);
-        fabAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                showAddTaskDialog();
+            public void onCheckBoxCompletedClick(Task task, boolean isChecked) {
+                Task updatedTask = new Task(task.getTaskName(), task.isImportant(), Calendar.getInstance().getTime());
+                MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.taskcompletedsound);
+                final VibrationEffect vibrationEffect1;
+
+                if (!task.isCompleted()) {
+                    mediaPlayer.start();
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        vibrationEffect1 = VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE);
+                        vibrator.cancel();
+                        vibrator.vibrate(vibrationEffect1);
+                    }
+                }
+
+                updatedTask.setCompleted(!task.isCompleted());
+                updatedTask.setId(task.getId());
+
+                taskViewModel.update(updatedTask);
             }
+
         });
 
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    private void showAddTaskDialog() {
-        final Dialog dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.fragment_add_task);
-
-        EditText editTextTitle = dialog.findViewById(R.id.edit_text_add_title);
-        editTextTitle.requestFocus();
-
-        CheckBox checkBoxImportant = dialog.findViewById(R.id.cb_important);
-        ImageButton buttonSaveTask = dialog.findViewById(R.id.button_save_task);
-
-        buttonSaveTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = editTextTitle.getText().toString();
-                boolean important = checkBoxImportant.isChecked();
-
-                if (title.trim().isEmpty()) {
-                    Toast.makeText(getContext(), "Please insert task title", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                taskViewModel.insert(new Task(title, important));
-                //dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     private void showSnackBarDelete(Task task, int position) {

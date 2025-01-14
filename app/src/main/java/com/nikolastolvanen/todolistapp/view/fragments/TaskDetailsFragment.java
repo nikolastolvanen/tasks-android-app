@@ -2,11 +2,10 @@ package com.nikolastolvanen.todolistapp.view.fragments;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,19 +14,20 @@ import android.widget.Toast;
 
 import com.nikolastolvanen.todolistapp.R;
 import com.nikolastolvanen.todolistapp.TaskAdapter;
-import com.nikolastolvanen.todolistapp.model.Task;
 import com.nikolastolvanen.todolistapp.viewmodel.TaskViewModel;
+import com.nikolastolvanen.todolistapp.model.Task;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class TaskDetailsFragment extends Fragment {
-
 
     int taskId;
     String taskName;
     boolean taskCompleted;
     boolean taskImportant;
-    String taskDueDate;
-
+    Date taskDueDate;
 
     TaskViewModel taskViewModel;
     TaskAdapter adapter;
@@ -44,7 +44,7 @@ public class TaskDetailsFragment extends Fragment {
         taskName = getArguments().getString("taskName");
         taskCompleted = getArguments().getBoolean("taskCompleted");
         taskImportant = getArguments().getBoolean("taskImportant");
-        //taskDueDate = ///////////////////////////////////////////////////////////////////////////////////////
+        //taskDueDate = getArguments().getDate("taskDueDate");
 
         taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
         adapter = new TaskAdapter();
@@ -67,7 +67,7 @@ public class TaskDetailsFragment extends Fragment {
                     return;
                 }
 
-                Task task = new Task(title, important);
+                Task task = new Task(title, important, Calendar.getInstance().getTime());
                 task.setCompleted(completed);
                 task.setId(taskId);
                 taskViewModel.update(task);

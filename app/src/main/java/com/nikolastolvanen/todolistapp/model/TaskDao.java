@@ -29,6 +29,9 @@ public interface TaskDao {
     @Query("SELECT * FROM task_table")
     LiveData<List<Task>> getAllTasks();
 
+    @Query("SELECT * FROM task_table WHERE task_table.id == :id")
+    LiveData<Task> getTask(long id);
+
     //@Query("SELECT * FROM task_table WHERE due_date") /////////////////////////
     //LiveData<List<Task>> getTasksToday();
 

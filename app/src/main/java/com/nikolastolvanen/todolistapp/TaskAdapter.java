@@ -1,5 +1,6 @@
 package com.nikolastolvanen.todolistapp;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nikolastolvanen.todolistapp.model.Task;
+
 
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
 
@@ -47,10 +49,13 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
         Task currentTask = getItem(position);
+
+        String formatted = Utils.formatDate(currentTask.getDueDate());
+
         holder.textViewTitle.setText(currentTask.getTaskName());
         holder.checkBoxCompleted.setChecked(currentTask.isCompleted());
         holder.checkBoxImportant.setChecked(currentTask.isImportant());
-        //holder.textViewDueDate.setText(currentTask.isDueDate());
+        holder.textViewDueDate.setText(formatted);
     }
 
     public Task getTaskAt(int position) {
@@ -61,14 +66,14 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
         private TextView textViewTitle;
         private CheckBox checkBoxCompleted;
         private CheckBox checkBoxImportant;
-        //private TextView textViewDueDate;
+        private TextView textViewDueDate;
 
         public TaskHolder(View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.text_view_title);
             checkBoxCompleted = itemView.findViewById(R.id.check_box_completed);
             checkBoxImportant = itemView.findViewById(R.id.check_box_important);
-            //textViewDueDate = itemView.findViewById(R.id.text_view_due_date);
+            textViewDueDate = itemView.findViewById(R.id.text_view_due_date);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,12 +84,22 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
                     }
                 }
             });
+
+            checkBoxCompleted.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onCheckBoxCompletedClick(getItem(position), getItem(position).isCompleted());
+                    }
+                }
+            });
         }
     }
 
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
-        //void onCheckBoxClick(Task task, boolean isChecked);
+        void onCheckBoxCompletedClick(Task task, boolean isChecked);
     }
 
     public void setTaskListClickListener(OnTaskClickListener listener) {

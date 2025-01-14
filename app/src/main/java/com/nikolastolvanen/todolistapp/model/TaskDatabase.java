@@ -12,6 +12,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.nikolastolvanen.todolistapp.Converters;
 
+import java.util.Calendar;
+
+
 @Database(entities = {Task.class}, version = 1)
 @TypeConverters({Converters.class})
 public abstract class TaskDatabase extends RoomDatabase {
@@ -62,9 +65,9 @@ public abstract class TaskDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            taskDao.insert(new Task("Task 1", false));
-            taskDao.insert(new Task("Task 2", true));
-            taskDao.insert(new Task("Task 3", true));
+            taskDao.insert(new Task("Task 1", false, Calendar.getInstance().getTime()));
+            taskDao.insert(new Task("Task 2", true, Calendar.getInstance().getTime()));
+            taskDao.insert(new Task("Task 3", true, Calendar.getInstance().getTime()));
             return null;
         }
     }
