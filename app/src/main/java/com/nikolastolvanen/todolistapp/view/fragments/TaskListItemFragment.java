@@ -30,7 +30,7 @@ public class TaskListItemFragment extends Fragment {
         checkBoxCompleted = view.findViewById(R.id.check_box_completed);
         checkBoxImportant = view.findViewById(R.id.check_box_important);
         textViewTaskName = view.findViewById(R.id.text_view_title);
-        textViewDueDate = view.findViewById(R.id.text_view_due_date);
+        textViewDueDate = view.findViewById(R.id.chip_due_date);
 
     }
 

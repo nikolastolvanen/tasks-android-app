@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TodolistApp</string>
+    <string name="hello_blank_fragment">Hei tyhjä fragmentti</string>
+    <string name="add">LISÄÄ</string>
+    <string name="image_description">Kuvan kuvaus</string>
+    <string name="tomorrow">Huomenna</string>
+    <string name="next_week">Seuraavalla viikolla</string>
+    <string name="today">Tänään</string>
+    <string name="due_date_text">Eräpäivä</string>
+    <string name="please_insert_due_date">Anna eräpäivä</string>
+    <string name="please_insert_task_title">Anna tehävän nimi</string>
+    <string name="all_tasks">Kaikki tehtävät</string>
+    <string name="today_s_tasks">Tehtävät tänään</string>
+    <string name="important_tasks">Tärkeät tehtävät</string>
+    <string name="undo">KUMOA</string>
+    <string name="task_deleted">Tehtävä poistettu</string>
+    <string name="deleted_all_tasks">Kaikki tehtävät poistettu</string>
+    <string name="deleted_completed_tasks">Suoritetut tehtävät poistettu</string>
+    <string name="add_task">Lisää tehtävä</string>
+    <string name="due_date">Eräpäivä</string>
+    <string name="example_task">Esimerkki tehtävä</string>
+    <string name="update_task">Päivitä tehtävä</string>
+    <string name="important">Tärkeä</string>
+    <string name="all">Kaikki</string>
+    <string name="delete_completed_tasks">Poista suoritetut tehtävät</string>
+    <string name="delete_all_tasks">Poista kaikki tehtävät</string>
+    <string name="set_due_date">Anna eräpäivä</string>
+    <string name="cb_for_completing_the_task">Aseta onko tehtävä suoritettu</string>
+    <string name="check_if_the_task_is_important">Aseta onko tehtävä tärkeä</string>
+    <string name="btn_to_add_a_new_task">Lisää uusi tehtävä</string>
+    <string name="save_task_to_database">Tallenna tehtävä tietokantaan</string>
+</resources>

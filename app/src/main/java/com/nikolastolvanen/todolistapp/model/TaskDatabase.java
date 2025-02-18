@@ -31,13 +31,12 @@ public abstract class TaskDatabase extends RoomDatabase {
                             "task_database"
                     ).fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
-                    //.addTypeConverter(exampleConverterInstance)//////////////////////////////////////////////
                     .build();
         }
         return instance;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -57,7 +56,7 @@ public abstract class TaskDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
 
-        private TaskDao taskDao;
+        private final TaskDao taskDao;
 
         private PopulateDbAsyncTask(TaskDatabase db) {
             taskDao = db.taskDao();

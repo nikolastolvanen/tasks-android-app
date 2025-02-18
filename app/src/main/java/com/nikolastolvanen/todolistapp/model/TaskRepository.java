@@ -5,18 +5,23 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.Calendar;
 import java.util.List;
 
 
 public class TaskRepository {
 
-    private TaskDao taskDao;
-    private LiveData<List<Task>> allTasks;
+    private final TaskDao taskDao;
+    private final LiveData<List<Task>> allTasks;
+    private final LiveData<List<Task>> importantTasks;
+    private final LiveData<List<Task>> todayTasks;
 
     public TaskRepository(Application application) {
         TaskDatabase database = TaskDatabase.getInstance(application);
         taskDao = database.taskDao();
         allTasks = taskDao.getAllTasks();
+        importantTasks = taskDao.getImportantTasks();
+        todayTasks = taskDao.getTodayTasks(getStartOfDay(), getEndOfDay());
     }
 
     public void insert(Task task) {
@@ -35,12 +40,57 @@ public class TaskRepository {
         new DeleteAllTasksAsyncTask(taskDao).execute();
     }
 
+    public void deleteCompletedTasks() {
+        new DeleteCompletedTasksAsyncTask(taskDao).execute();
+    }
+
     public LiveData<List<Task>> getAllTasks() {
         return allTasks;
     }
 
+    public LiveData<List<Task>> getImportantTasks() {
+        return importantTasks;
+    }
+
+    public LiveData<List<Task>> getTodayTasks() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        long startOfDay = calendar.getTimeInMillis();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        long endOfDay = calendar.getTimeInMillis();
+
+        return taskDao.getTodayTasks(startOfDay, endOfDay);
+    }
+
+    private long getStartOfDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
+    }
+
+    private long getEndOfDay() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTimeInMillis();
+    }
+
+
+
     public static class InsertTaskAsyncTask extends AsyncTask<Task, Void, Void> {
-        private TaskDao taskDao;
+        private final TaskDao taskDao;
 
         private InsertTaskAsyncTask(TaskDao taskDao) {
             this.taskDao = taskDao;
@@ -54,7 +104,7 @@ public class TaskRepository {
     }
 
     public static class UpdateTaskAsyncTask extends AsyncTask<Task, Void, Void> {
-        private TaskDao taskDao;
+        private final TaskDao taskDao;
 
         private UpdateTaskAsyncTask(TaskDao taskDao) {
             this.taskDao = taskDao;
@@ -68,7 +118,7 @@ public class TaskRepository {
     }
 
     public static class DeleteTaskAsyncTask extends AsyncTask<Task, Void, Void> {
-        private TaskDao taskDao;
+        private final TaskDao taskDao;
 
         private DeleteTaskAsyncTask(TaskDao taskDao) {
             this.taskDao = taskDao;
@@ -82,7 +132,7 @@ public class TaskRepository {
     }
 
     public static class DeleteAllTasksAsyncTask extends AsyncTask<Void, Void, Void> {
-        private TaskDao taskDao;
+        private final TaskDao taskDao;
 
         private DeleteAllTasksAsyncTask(TaskDao taskDao) {
             this.taskDao = taskDao;
@@ -91,6 +141,20 @@ public class TaskRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             taskDao.deleteAllTasks();
+            return null;
+        }
+    }
+
+    public static class DeleteCompletedTasksAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final TaskDao taskDao;
+
+        private DeleteCompletedTasksAsyncTask(TaskDao taskDao) {
+            this.taskDao = taskDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            taskDao.deleteCompletedTasks();
             return null;
         }
     }

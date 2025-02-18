@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,51 +16,34 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/white"
             android:elevation="4dp"
+            app:title="@string/all_tasks"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="32dp"
-        android:progressDrawable="@drawable/custom_progressbar"
-        android:visibility="invisible" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="600dp"
         android:layout_marginTop="?attr/actionBarSize"
         app:defaultNavHost="true"
         app:navGraph="@navigation/task_details_navigation" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:clickable="true"
-        android:layout_marginBottom="95dp"
-        android:layout_marginEnd="15dp"
-        app:srcCompat="@drawable/baseline_add_24" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/btm_nav"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
+        app:backgroundTint="@color/very_light_gray"
+        app:itemBackground="@color/very_light_gray"
+        app:itemActiveIndicatorStyle="@style/Theme.BottomNavigationView.ActiveIndicator"
         app:menu="@menu/bottom_nav_menu"
         android:layout_gravity="bottom" />
 
     <include layout="@layout/fragment_add_task_bottom_sheet" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 

@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:background="@drawable/task_details_background"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".view.fragments.TaskDetailsFragment">
 
     <RelativeLayout
@@ -16,6 +18,7 @@
         <CheckBox
             android:id="@+id/check_box_task_details_completed"
             style="@style/custom_circle_checkbox"
+            android:contentDescription="@string/cb_for_completing_the_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true" />
@@ -27,9 +30,11 @@
             android:layout_centerInParent="true"
             android:layout_toStartOf="@id/check_box_task_details_important"
             android:layout_toEndOf="@+id/check_box_task_details_completed"
+            android:autofillHints="Task title"
+            android:inputType="text"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="22sp"
-            tools:text="Example task" />
+            tools:text="@string/example_task" />
 
         <CheckBox
             android:id="@+id/check_box_task_details_important"
@@ -40,11 +45,30 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/button_update_task"
+    <TextView
+        android:id="@+id/text_view_due_date_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="Update task" />
+        android:layout_marginTop="30dp"
+        app:drawableLeftCompat="@drawable/baseline_today_24"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:drawablePadding="4dp"
+        android:text="@string/due_date_text"
+        android:textSize="20sp" />
+
+    <CalendarView
+        android:id="@+id/calendar_view_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button_update_task"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/theme_color"
+        android:layout_gravity="center"
+        android:text="@string/update_task" />
 
 </LinearLayout>

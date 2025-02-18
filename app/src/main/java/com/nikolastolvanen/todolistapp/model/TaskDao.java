@@ -26,13 +26,19 @@ public interface TaskDao {
     @Query("DELETE FROM task_table")
     void deleteAllTasks();
 
-    @Query("SELECT * FROM task_table")
+    @Query("DELETE FROM task_table WHERE is_completed = 1")
+    void deleteCompletedTasks();
+
+    @Query("SELECT * FROM task_table ORDER BY due_date ASC")
     LiveData<List<Task>> getAllTasks();
 
     @Query("SELECT * FROM task_table WHERE task_table.id == :id")
     LiveData<Task> getTask(long id);
 
-    //@Query("SELECT * FROM task_table WHERE due_date") /////////////////////////
-    //LiveData<List<Task>> getTasksToday();
+    @Query("SELECT * FROM task_table WHERE is_important = 1 ORDER BY due_date ASC")
+    LiveData<List<Task>> getImportantTasks();
+
+    @Query("SELECT * FROM task_table WHERE due_date >= :startOfDay AND due_date < :endOfDay ORDER BY due_date ASC")
+    LiveData<List<Task>> getTodayTasks(long startOfDay, long endOfDay);
 
 }

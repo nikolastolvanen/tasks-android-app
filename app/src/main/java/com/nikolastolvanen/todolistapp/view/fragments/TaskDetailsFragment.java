@@ -8,12 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikolastolvanen.todolistapp.R;
 import com.nikolastolvanen.todolistapp.TaskAdapter;
+import com.nikolastolvanen.todolistapp.Utils;
 import com.nikolastolvanen.todolistapp.viewmodel.TaskViewModel;
 import com.nikolastolvanen.todolistapp.model.Task;
 
@@ -28,6 +31,8 @@ public class TaskDetailsFragment extends Fragment {
     boolean taskCompleted;
     boolean taskImportant;
     Date taskDueDate;
+
+    Calendar calendar = Calendar.getInstance();
 
     TaskViewModel taskViewModel;
     TaskAdapter adapter;
@@ -44,7 +49,9 @@ public class TaskDetailsFragment extends Fragment {
         taskName = getArguments().getString("taskName");
         taskCompleted = getArguments().getBoolean("taskCompleted");
         taskImportant = getArguments().getBoolean("taskImportant");
-        //taskDueDate = getArguments().getDate("taskDueDate");
+
+        long dateMillis = getArguments().getLong("taskDueDate");
+        taskDueDate = new Date(dateMillis);
 
         taskViewModel = new ViewModelProvider(getActivity()).get(TaskViewModel.class);
         adapter = new TaskAdapter();
@@ -52,6 +59,20 @@ public class TaskDetailsFragment extends Fragment {
         CheckBox cbTaskDetailsCompleted = view.findViewById(R.id.check_box_task_details_completed);
         EditText etTaskName = view.findViewById(R.id.edit_text_task_details_title);
         CheckBox cbTaskDetailsImportant = view.findViewById(R.id.check_box_task_details_important);
+        TextView textViewDueDateNow = view.findViewById(R.id.text_view_due_date_now);
+
+        CalendarView calendarView = view.findViewById(R.id.calendar_view_update);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
+                calendar.clear();
+                calendar.set(year, month, dayOfMonth);
+                taskDueDate = calendar.getTime();
+
+                String formatted = Utils.formatDate(taskDueDate);
+                textViewDueDateNow.setText(formatted);
+            }
+        });
 
         Button btnUpdate = view.findViewById(R.id.button_update_task);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -61,17 +82,17 @@ public class TaskDetailsFragment extends Fragment {
                 String title = etTaskName.getText().toString();
                 boolean important = cbTaskDetailsImportant.isChecked();
                 boolean completed = cbTaskDetailsCompleted.isChecked();
+                Date date = taskDueDate;
 
                 if (title.trim().isEmpty()) {
-                    Toast.makeText(getContext(), "Please insert task title", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.please_insert_task_title, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Task task = new Task(title, important, Calendar.getInstance().getTime());
+                Task task = new Task(title, important, date);
                 task.setCompleted(completed);
                 task.setId(taskId);
                 taskViewModel.update(task);
-
                 getParentFragmentManager().popBackStackImmediate();
 
             }
@@ -80,6 +101,9 @@ public class TaskDetailsFragment extends Fragment {
         etTaskName.setText(taskName);
         cbTaskDetailsCompleted.setChecked(taskCompleted);
         cbTaskDetailsImportant.setChecked(taskImportant);
+
+        String formatted = Utils.formatDate(taskDueDate);
+        textViewDueDateNow.setText(formatted);
 
     }
 
