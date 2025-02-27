@@ -1,6 +1,6 @@
-
+<h1>Tasks Android App</h1>
 
 <p align="center">
-  <img src="screenshots/todolist_app_screenshot1.jpg?raw=true" width="300" title="hover text">
+  <img src="screenshots/main2.jpg?raw=true" width="500" title="hover text">
 </p>
 
